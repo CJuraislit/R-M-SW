@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./Character.css";
 import { getRandomHexColor, getRandomElementOfArray } from "./utilits";
-import { API_URL } from "./consts";
+import { API_URL, period } from "./consts";
 
 const Character = () => {
   const [visibilty, setVisibilty] = useState(true);
@@ -28,7 +28,7 @@ const CharacterContent = ({ setVisibilty }) => {
     intervalRef.current = setInterval(() => {
       console.log("setInterval");
       getRandomCharacter();
-    }, 3000);
+    }, period);
 
     return () => {
       console.log("Component: Unmount");
@@ -38,7 +38,6 @@ const CharacterContent = ({ setVisibilty }) => {
 
   useEffect(() => {
     console.log("Component: Render");
-    // setLoading(false);
   });
 
   const getRandomCharacter = () => {
@@ -48,6 +47,7 @@ const CharacterContent = ({ setVisibilty }) => {
         const characters = data.results;
         const randomCharacter = getRandomElementOfArray(characters);
         setCharacter({ name: randomCharacter.name });
+        setLoading(false);
       });
   };
 
