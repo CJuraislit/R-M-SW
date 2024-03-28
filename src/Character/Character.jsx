@@ -16,10 +16,13 @@ const Character = () => {
 const CharacterContent = ({ setVisibilty }) => {
   const intervalRef = useRef(undefined);
   const [character, setCharacter] = useState({ name: "Undefined" });
+  const [loading, setLoading] = useState(false);
+
   const randomColor = getRandomHexColor();
 
   useEffect(() => {
     console.log("Component: Mount");
+    setLoading(true);
     getRandomCharacter();
 
     intervalRef.current = setInterval(() => {
@@ -35,6 +38,7 @@ const CharacterContent = ({ setVisibilty }) => {
 
   useEffect(() => {
     console.log("Component: Render");
+    // setLoading(false);
   });
 
   const getRandomCharacter = () => {
@@ -57,11 +61,18 @@ const CharacterContent = ({ setVisibilty }) => {
 
   return (
     <>
-      <button onClick={hideComponentHandler}>Hide Componrnt</button>
-      <h2 className="Character" style={{ backgroundColor: randomColor }}>
-        Character: {character.name}
-      </h2>
-      <button onClick={getRandomCharacterHandler}>Get Random Characer</button>
+      {loading && <p>Loading...</p>}
+      {!loading && (
+        <>
+          <button onClick={hideComponentHandler}>Hide Componrnt</button>
+          <h2 className="Character" style={{ backgroundColor: randomColor }}>
+            Character: {character.name}
+          </h2>
+          <button onClick={getRandomCharacterHandler}>
+            Get Random Characer
+          </button>
+        </>
+      )}
     </>
   );
 };
